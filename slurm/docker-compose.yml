@@ -1,0 +1,12 @@
+version: "2"
+services:
+  slurm:
+    hostname: slurm
+    image: birdhouse/slurm
+    ports:
+      # slurmctl
+      - "6817:6817"
+      # slurmd
+      - "6818:6818"
+    volumes:
+      - ./slurm:/etc/slurm-llnl:ro
