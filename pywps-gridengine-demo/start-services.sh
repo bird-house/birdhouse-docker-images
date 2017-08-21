@@ -13,3 +13,5 @@ set -o allexport
 make update-config
 # start supervisor service with wps and nginx
 make start
+# start gridengine
+/sbin/my_init
