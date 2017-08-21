@@ -46,10 +46,11 @@ RUN usermod -m -d /home/demo www-data && \
 # add slurm config
 # ADD slurm/slurm.conf /etc/slurm-llnl/slurm.conf
 
+ENV SGE_ROOT /var/lib/gridengine
+# ENV DAEMON_OPTS --nodaemon
+
 # copy start script
 COPY start-services.sh /etc/start-services.sh
-
-ENV DAEMON_OPTS --nodaemon
 
 # Start service ...
 CMD ["/etc/start-services.sh"]
