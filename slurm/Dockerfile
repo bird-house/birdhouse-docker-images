@@ -1,19 +1,14 @@
 FROM continuumio/miniconda
 
 MAINTAINER Birdhouse <wps@dkrz.de>
-LABEL Description="Slurm" Vendor="Birdhouse" Version="0.7.5"
+LABEL Description="Slurm" Vendor="Birdhouse" Version="0.7.6"
 
-# install sudo
-RUN apt-get update && \
-  apt-get install -y sudo
+# install ansible
+RUN conda install -c conda-forge ansible
 
 # get ansible
 WORKDIR /opt
 RUN git clone https://github.com/bird-house/birdhouse-ansible.git
-
-# bootstrap ansible
-WORKDIR /opt/birdhouse-ansible
-RUN bash bootstrap.sh
 
 # run ansible
 WORKDIR /opt/birdhouse-ansible/slurm
