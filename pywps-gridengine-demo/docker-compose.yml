@@ -2,9 +2,9 @@ version: '2.0'
 services:
   wps:
     image: birdhouse/pywps-gridengine-demo
-    hostname: localhost
+    hostname: xenon-gridengine
     environment:
-      HOSTNAME: localhost
+      HOSTNAME: xenon-gridengine
       HTTP_PORT: 5000
       OUTPUT_PORT: 5001
     ports:
@@ -12,18 +12,6 @@ services:
       - "5000:5000"
       # nginx output port
       - "5001:5001"
-    volumes:
-      # - ./slurm:/etc/slurm-llnl:ro
-      - lib:/opt/birdhouse/var/lib
-      - log:/opt/birdhouse/var/log
-  gridengine:
-    hostname: xenon-gridengine
-    image: nlesc/xenon-gridengine
-    #  ports:
-    #    - "6817:6817"
-    #volumes:
-      #- ./slurm:/etc/slurm-llnl:ro
-    #command: ["slurmctld"]
   db:
     hostname: db
     image: postgres
@@ -31,7 +19,3 @@ services:
       POSTGRES_PASSWORD: testdb
     #  ports:
     #    - "5432:5432"
-
-volumes:
-  lib:
-  log:

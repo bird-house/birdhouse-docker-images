@@ -1,5 +1,6 @@
 # vim:set ft=dockerfile:
-FROM phusion/baseimage
+# FROM phusion/baseimage
+FROM nlesc/xenon-gridengine
 MAINTAINER Birdhouse <wps@dkrz.de>
 
 LABEL Description="pywps gridengine demo" Vendor="Birdhouse" Version="0.1.0"
