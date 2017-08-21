@@ -1,6 +1,6 @@
 # Used https://github.com/gawbul/docker-sge as inspiration/source
 FROM nlesc/xenon-phusion-base
-MAINTAINER Stefan Verhoeven "s.verhoeven@esciencecenter.nl"
+MAINTAINER Birdhouse <wps@dkrz.de>
 
 RUN echo "Package: xserver-xorg*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences && \
 echo "Package: unity*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences && \
@@ -8,11 +8,8 @@ echo "Package: gnome*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences
 echo "gridengine-master shared/gridenginemaster string $HOSTNAME" | debconf-set-selections && \
 echo "postfix postfix/main_mailer_type  string 'No configuration'" | debconf-set-selections && \
 apt-get update && \
-DEBIAN_FRONTEND=noninteractive apt-get install -y gridengine-master gridengine-exec gridengine-client inotify-tools && \
-apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+DEBIAN_FRONTEND=noninteractive apt-get install -y gridengine-master gridengine-exec gridengine-client inotify-tools
 
-# Expose sshd port
-EXPOSE 22
 # Expose ge qmaster
 EXPOSE 6444
 # Expose ge execd
@@ -46,10 +43,3 @@ qconf -Mconf configurations/global && \
 killall sge_qmaster
 
 CMD ["/sbin/my_init"]
-
-# Check that qmaster, execd and sshd deamons accept connections
-HEALTHCHECK --interval=1s CMD qping -info $(hostname) 6444 qmaster 1 && \
-qping -info $(hostname) 6445 execd 1 && \ 
-ssh -o NoHostAuthenticationForLocalhost=yes -i /home/xenon/.ssh/id_rsa xenon@localhost /bin/true || \
-exit 1
-
