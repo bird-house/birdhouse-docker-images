@@ -26,5 +26,10 @@ RUN usermod -m -d /home/demo www-data && \
 
 ENV SGE_ROOT /var/lib/gridengine
 
+EXPOSE 6444
+
+# copy start script
+COPY start-services.sh /etc/start-services.sh
+
 # Start service ...
-CMD ["/sbin/my_init"]
+CMD ["/etc/start-services.sh"]

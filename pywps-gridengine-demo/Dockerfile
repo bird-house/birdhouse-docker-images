@@ -38,25 +38,20 @@ RUN apt-get install -y gridengine-drmaa1.0 gridengine-drmaa-dev gridengine-clien
 # Install conda packages for scheduler extension
 RUN conda install -y -n emu -c birdhouse -c conda-forge psycopg2 drmaa dill
 
-# Install client part
-RUN conda install -y -c birdhouse -c conda-forge emu pywps=4 dill psycopg2 gunicorn=19.7
-
 # change demo user home
 RUN usermod -m -d /home/demo www-data && \
   mkdir /home/demo && \
   chown -R www-data /home/demo
 
-# add slurm config
-# ADD slurm/slurm.conf /etc/slurm-llnl/slurm.conf
-
 ENV SGE_ROOT /var/lib/gridengine
-# ENV DAEMON_OPTS --nodaemon
+ENV DAEMON_OPTS --nodaemon
+
+# Overwrite with current hostname
+RUN echo "gridengine" > /var/lib/gridengine/default/common/act_qmaster
+RUN /bin/echo -e "group_name @allhosts\nhostlist gridengine wps" > /etc/gridengine/files/host_groups/allhosts
 
 # copy start script
 COPY start-services.sh /etc/start-services.sh
-
-#VOLUME /opt/birdhouse/var/lib
-#VOLUME /opt/birdhouse/var/log
 
 # Start service ...
 CMD ["/etc/start-services.sh"]
