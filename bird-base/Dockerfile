@@ -1,10 +1,10 @@
 FROM continuumio/miniconda
-MAINTAINER https://github.com/bird-house/birdhouse-build
+MAINTAINER Birdhouse <wps@dkrz.de>
 
-LABEL Description="Birdhouse base image" Vendor="Birdhouse" Version="0.2.3"
+LABEL Description="Birdhouse base image" Vendor="Birdhouse" Version="0.2.4"
 
 # Install common debian packages
-RUN apt-get update && apt-get install -y sudo wget curl build-essential unzip
+RUN apt-get update -y && apt-get install -y sudo wget curl build-essential unzip
 
 # add conda channels
 RUN conda config --set channel_priority true && \
