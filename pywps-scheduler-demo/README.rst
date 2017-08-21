@@ -20,11 +20,11 @@ Prepare the demo
 
 First get this demo from github::
 
-  $ git clone https://github.com/bird-house/birdhouse-playground.git
+  $ git clone https://github.com/bird-house/birdhouse-docker-images.git
 
 Change in to the docker ``pywps-scheduler-demo`` directory::
 
-  $ cd birdhouse-playground/docker/pywps-scheduler-demo
+  $ cd birdhouse-docker-images/pywps-scheduler-demo
 
 Get docker images using docker-compose::
 
