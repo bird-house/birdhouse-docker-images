@@ -6,9 +6,11 @@ RUN echo "Package: xserver-xorg*\nPin: release *\nPin-Priority: -1" >> /etc/apt/
 echo "Package: unity*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences && \
 echo "Package: gnome*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences && \
 echo "gridengine-master shared/gridenginemaster string $HOSTNAME" | debconf-set-selections && \
-echo "postfix postfix/main_mailer_type  string 'No configuration'" | debconf-set-selections && \
-apt-get update && \
-DEBIAN_FRONTEND=noninteractive apt-get install -y gridengine-master gridengine-exec gridengine-client inotify-tools
+echo "postfix postfix/main_mailer_type  string 'No configuration'" | debconf-set-selections
+
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update -y && \
+  apt-get install -y gridengine-master gridengine-exec gridengine-client inotify-tools
 
 # Expose ge qmaster
 EXPOSE 6444
