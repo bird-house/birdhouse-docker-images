@@ -12,6 +12,9 @@ services:
       - "5000:5000"
       # nginx output port
       - "5001:5001"
+    volumes:
+      - lib:/opt/birdhouse/var/lib
+      - log:/opt/birdhouse/var/log
   db:
     hostname: db
     image: postgres
@@ -19,3 +22,7 @@ services:
       POSTGRES_PASSWORD: testdb
     #  ports:
     #    - "5432:5432"
+
+volumes:
+  lib:
+  log:
