@@ -1,6 +1,6 @@
 # vim:set ft=dockerfile:
 # FROM phusion/baseimage
-FROM birdhouse/gridengine-wps
+FROM birdhouse/gridengine
 MAINTAINER Birdhouse <wps@dkrz.de>
 
 LABEL Description="pywps gridengine demo" Vendor="Birdhouse" Version="0.1.1"
@@ -28,9 +28,6 @@ RUN bash bootstrap.sh -i
 
 # run emu install
 RUN make install
-
-# add conda to path
-ENV PATH /opt/conda/bin:$PATH
 
 # install debian packages with gridengine drmaa
 RUN apt-get install -y gridengine-drmaa1.0 gridengine-drmaa-dev gridengine-client

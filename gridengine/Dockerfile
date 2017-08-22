@@ -1,7 +1,7 @@
 # Used https://github.com/gawbul/docker-sge as inspiration/source
 FROM nlesc/xenon-phusion-base
 MAINTAINER Birdhouse <wps@dkrz.de>
-LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.0"
+LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.1"
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -44,7 +44,8 @@ perl -pi -e 's/false/true/' /var/lib/gridengine/default/common/bootstrap && \
 echo $HOSTNAME > /var/lib/gridengine/default/common/act_qmaster && \
 /etc/init.d/gridengine-master start && sleep 2 && \
 # submit host
-qconf -as $HOSTNAME && \
+qconf -as gridengine && \
+qconf -as wps && \
 # hosts for queues
 /bin/echo -e "group_name @allhosts\nhostlist $HOSTNAME" > host_groups/allhosts && \
 qconf -Ahgrp host_groups/allhosts && \
@@ -53,7 +54,6 @@ qconf -Ap parallel_environments/fillup && \
 qconf -Ap parallel_environments/round && \
 qconf -Ap parallel_environments/smp && \
 qconf -Aq queues/default && \
-qconf -Aq queues/slow && \
 qconf -Msconf scheduler && \
 qconf -Mconf configurations/global && \
 killall sge_qmaster
