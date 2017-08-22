@@ -2,9 +2,9 @@ version: '2.0'
 services:
   wps:
     image: birdhouse/pywps-gridengine-demo
-    hostname: xenon-gridengine
+    hostname: gridengine
     environment:
-      HOSTNAME: xenon-gridengine
+      HOSTNAME: gridengine
       HTTP_PORT: 5000
       OUTPUT_PORT: 5001
     ports:

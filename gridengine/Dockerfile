@@ -1,6 +1,7 @@
 # Used https://github.com/gawbul/docker-sge as inspiration/source
 FROM nlesc/xenon-phusion-base
 MAINTAINER Birdhouse <wps@dkrz.de>
+LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.0"
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -30,10 +31,11 @@ echo "Package: gnome*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences
 echo "gridengine-master shared/gridenginemaster string $HOSTNAME" | debconf-set-selections && \
 echo "postfix postfix/main_mailer_type  string 'No configuration'" | debconf-set-selections
 
-RUN apt-get install -y gridengine-master gridengine-exec gridengine-client inotify-tools
+RUN apt-get install -y gridengine-master gridengine-exec gridengine-client
 
 # config
 ENV HOSTNAME gridengine
+ENV SGE_ROOT /var/lib/gridengine
 ADD etc/gridengine /etc/gridengine/files
 WORKDIR /etc/gridengine/files
 RUN mkdir host_groups exec_hosts && \
