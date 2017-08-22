@@ -12,9 +12,3 @@ RUN conda install -y -c birdhouse -c conda-forge emu pywps=4 dill psycopg2 gunic
 RUN usermod -m -d /home/demo www-data && \
   mkdir /home/demo && \
   chown -R www-data /home/demo
-
-# copy start script
-COPY start-services.sh /etc/start-services.sh
-
-# Start service ...
-CMD ["/etc/start-services.sh"]

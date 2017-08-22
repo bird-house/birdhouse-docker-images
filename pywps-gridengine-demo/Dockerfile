@@ -3,7 +3,7 @@
 FROM birdhouse/gridengine-wps
 MAINTAINER Birdhouse <wps@dkrz.de>
 
-LABEL Description="pywps gridengine demo" Vendor="Birdhouse" Version="0.1.0"
+LABEL Description="pywps gridengine demo" Vendor="Birdhouse" Version="0.1.1"
 
 USER root
 ENV USER root
@@ -38,7 +38,7 @@ RUN apt-get install -y gridengine-drmaa1.0 gridengine-drmaa-dev gridengine-clien
 # Install conda packages for scheduler extension
 RUN conda install -y -n emu -c birdhouse -c conda-forge psycopg2 drmaa dill
 
-# ENV DAEMON_OPTS --nodaemon
+ENV DAEMON_OPTS --nodaemon
 
 # copy start script
 COPY start-services.sh /etc/start-services.sh
