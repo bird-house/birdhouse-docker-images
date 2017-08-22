@@ -2,26 +2,38 @@
 FROM nlesc/xenon-phusion-base
 MAINTAINER Birdhouse <wps@dkrz.de>
 
+ENV DEBIAN_FRONTEND noninteractive
+
+# prepare conda install
+RUN apt-get update -y && \
+  apt-get install -y curl bzip2
+
+# install conda
+RUN curl -LO https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+RUN bash Miniconda2-latest-Linux-x86_64.sh -b -p /opt/conda
+
+# add conda to path
+ENV PATH /opt/conda/bin:$PATH
+
+# install supervisor
+RUN conda install -y supervisor
+
+# add supervisor config
+ADD etc/supervisor /etc/supervisor
+
+# make supervisor dirs
+RUN mkdir -p /var/log/supervisor
+
 RUN echo "Package: xserver-xorg*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences && \
 echo "Package: unity*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences && \
 echo "Package: gnome*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences && \
 echo "gridengine-master shared/gridenginemaster string $HOSTNAME" | debconf-set-selections && \
 echo "postfix postfix/main_mailer_type  string 'No configuration'" | debconf-set-selections
 
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update -y && \
-  apt-get install -y gridengine-master gridengine-exec gridengine-client inotify-tools
-
-# Expose ge qmaster
-EXPOSE 6444
-# Expose ge execd
-EXPOSE 6445
-
-# add init scripts for master and exec deamons
-RUN mkdir -p /etc/my_init.d
-ADD etc/my_init.d/gridengine.sh /etc/my_init.d/gridengine.sh
+RUN apt-get install -y gridengine-master gridengine-exec gridengine-client inotify-tools
 
 # config
+ENV HOSTNAME gridengine
 ADD etc/gridengine /etc/gridengine/files
 WORKDIR /etc/gridengine/files
 RUN mkdir host_groups exec_hosts && \
@@ -44,4 +56,15 @@ qconf -Msconf scheduler && \
 qconf -Mconf configurations/global && \
 killall sge_qmaster
 
-CMD ["/sbin/my_init"]
+# copy start script
+ADD start-services.sh /etc/start-services.sh
+RUN chmod +x /etc/start-services.sh
+
+# Expose ge qmaster
+EXPOSE 6444
+# Expose ge execd
+EXPOSE 6445
+
+# Start service ...
+ENTRYPOINT ["/etc/start-services.sh"]
+CMD ["gridengine-master", "gridengine-exec"]

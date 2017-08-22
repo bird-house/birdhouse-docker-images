@@ -2,6 +2,7 @@ version: '2'
 services:
   gridengine:
     image: birdhouse/gridengine
-    hostname: xenon-gridengine
+    hostname: gridengine
     ports:
     - 6444 # qmaster
+    - 6445 # execd
