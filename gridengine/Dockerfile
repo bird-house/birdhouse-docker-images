@@ -1,6 +1,6 @@
 FROM nlesc/xenon-phusion-base
 MAINTAINER Birdhouse <wps@dkrz.de>
-LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.7"
+LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.8"
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -y && \
@@ -9,10 +9,8 @@ RUN apt-get update -y && \
 # install ansible with conda
 WORKDIR /root
 RUN git clone https://github.com/bird-house/birdhouse-ansible.git
-
 WORKDIR /root/birdhouse-ansible
-RUN git checkout develop
-
+# RUN git checkout develop
 RUN bash bootstrap.sh
 
 # add conda to path
