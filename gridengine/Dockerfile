@@ -54,8 +54,8 @@ qconf -as gridengine && \
 # hosts for queues
 qconf -Ahgrp host_groups/allhosts && \
 qconf -Aq queues/default && \
-qconf -Msconf scheduler && \
-qconf -Mconf configurations/global && \
+#qconf -Msconf scheduler && \
+#qconf -Mconf configurations/global && \
 killall sge_qmaster
 
 # copy start script
