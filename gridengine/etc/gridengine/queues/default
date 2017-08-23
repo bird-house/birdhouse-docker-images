@@ -8,7 +8,7 @@ min_cpu_interval 00:00:10
 processors UNDEFINED
 qtype BATCH INTERACTIVE
 ckpt_list NONE
-pe_list smp round fillup bi
+pe_list NONE
 rerun FALSE
 slots 2
 tmpdir /tmp

@@ -45,15 +45,14 @@ RUN mkdir exec_hosts && \
 perl -pi -e 's/false/true/' /var/lib/gridengine/default/common/bootstrap && \
 echo $HOSTNAME > /var/lib/gridengine/default/common/act_qmaster && \
 /etc/init.d/gridengine-master start && sleep 2 && \
-# submit host
-qconf -as gridengine && \
+# submit hosts
 qconf -as wps && \
+qconf -as gridengine && \
+# execute hosts
+#qconf -ae gridengine && \
+#qconf -ae gridengine-wps && \
 # hosts for queues
 qconf -Ahgrp host_groups/allhosts && \
-qconf -Ap parallel_environments/bi && \
-qconf -Ap parallel_environments/fillup && \
-qconf -Ap parallel_environments/round && \
-qconf -Ap parallel_environments/smp && \
 qconf -Aq queues/default && \
 qconf -Msconf scheduler && \
 qconf -Mconf configurations/global && \

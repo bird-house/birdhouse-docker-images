@@ -1,2 +1,2 @@
 group_name @allhosts
-hostlist gridengine
+hostlist gridengine gridengine-wps
