@@ -13,7 +13,7 @@ set -o allexport
 # starting supervisor
 supervisord -c /etc/supervisor/supervisord.conf
 
-# start slurm services: slurmctld slurmd
+# start gridengine services: sge_qmaster sge_exec
 supervisorctl -c /etc/supervisor/supervisord.conf start $@
 
 # loop for ever
