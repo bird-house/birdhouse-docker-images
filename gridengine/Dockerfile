@@ -40,7 +40,7 @@ ENV HOSTNAME gridengine
 ENV SGE_ROOT /var/lib/gridengine
 ADD etc/gridengine /etc/gridengine/files
 WORKDIR /etc/gridengine/files
-RUN mkdir host_groups exec_hosts && \
+RUN mkdir exec_hosts && \
 # Ignore domains
 perl -pi -e 's/false/true/' /var/lib/gridengine/default/common/bootstrap && \
 echo $HOSTNAME > /var/lib/gridengine/default/common/act_qmaster && \
@@ -49,7 +49,6 @@ echo $HOSTNAME > /var/lib/gridengine/default/common/act_qmaster && \
 qconf -as gridengine && \
 qconf -as wps && \
 # hosts for queues
-/bin/echo -e "group_name @allhosts\nhostlist $HOSTNAME" > host_groups/allhosts && \
 qconf -Ahgrp host_groups/allhosts && \
 qconf -Ap parallel_environments/bi && \
 qconf -Ap parallel_environments/fillup && \
