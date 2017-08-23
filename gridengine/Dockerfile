@@ -1,7 +1,7 @@
 # Used https://github.com/gawbul/docker-sge as inspiration/source
 FROM nlesc/xenon-phusion-base
 MAINTAINER Birdhouse <wps@dkrz.de>
-LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.1"
+LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.2"
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -20,10 +20,12 @@ ENV PATH /opt/conda/bin:$PATH
 RUN conda install -y supervisor
 
 # add supervisor config
-ADD etc/supervisor /etc/supervisor
+#ADD etc/supervisor /etc/supervisor
+ADD etc/supervisor /opt/birdhouse/etc/supervisor
 
 # make supervisor dirs
-RUN mkdir -p /var/log/supervisor
+#RUN mkdir -p /var/log/supervisor
+RUN mkdir -p /opt/birdhouse/var/log/supervisor
 
 RUN echo "Package: xserver-xorg*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences && \
 echo "Package: unity*\nPin: release *\nPin-Priority: -1" >> /etc/apt/preferences && \

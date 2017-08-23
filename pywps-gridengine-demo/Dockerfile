@@ -1,6 +1,6 @@
 # vim:set ft=dockerfile:
 # FROM phusion/baseimage
-FROM birdhouse/gridengine
+FROM birdhouse/gridengine-wps
 MAINTAINER Birdhouse <wps@dkrz.de>
 
 LABEL Description="pywps gridengine demo" Vendor="Birdhouse" Version="0.1.1"
@@ -41,4 +41,4 @@ ENV DAEMON_OPTS --nodaemon
 COPY start-services.sh /etc/start-services.sh
 
 # Start service ...
-CMD ["/etc/start-services.sh"]
+ENTRYPOINT ["/etc/start-services.sh"]
