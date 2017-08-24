@@ -20,9 +20,20 @@ services:
     hostname: gridengine
     environment:
       HOSTNAME: gridengine
+    # ports:
+    #   - "6444:6444"
+    command: ["gridengine-master"]
+  worker1:
+    image: birdhouse/gridengine-wps
+    hostname: worker1
+    environment:
+      HOSTNAME: worker1
+    # ports:
+    #   - "6445:6445"
     volumes:
       - lib:/opt/birdhouse/var/lib
       - log:/opt/birdhouse/var/log
+    command: ["gridengine-exec"]
   db:
     hostname: db
     image: postgres

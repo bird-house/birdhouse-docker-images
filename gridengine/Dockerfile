@@ -1,6 +1,6 @@
 FROM continuumio/miniconda
 MAINTAINER Birdhouse <wps@dkrz.de>
-LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.12"
+LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.14"
 
 # Add jessie backports repo for gridengine packages
 RUN echo "deb http://httpredir.debian.org/debian jessie-backports main contrib non-free" >> /etc/apt/sources.list
@@ -18,15 +18,13 @@ RUN git clone https://github.com/bird-house/birdhouse-ansible.git /opt/ansible
 WORKDIR /opt/ansible/gridengine
 RUN ansible-playbook \
   -e sge_server_name=gridengine \
-  -e sge_submission_node=wps \
-  -e vnode_prefix=wn \
-  -e max_number_of_nodes=1 \
+  -e sge_type_of_node=front \
   playbooks/gridengine.yml
 
 # install gridengine worker
 RUN ansible-playbook \
   -e sge_server_name=gridengine \
-  -e sge_type_of_node=wn \
+  -e sge_type_of_node=worker \
   playbooks/gridengine.yml
 
 # config
@@ -36,9 +34,9 @@ ENV SGE_ROOT /var/lib/gridengine
 ADD start-services.sh /etc/start-services.sh
 RUN chmod +x /etc/start-services.sh
 
-# Expose ge qmaster
+# Expose sge qmaster
 EXPOSE 6444
-# Expose ge execd
+# Expose sge execd
 EXPOSE 6445
 
 # Start service ...
