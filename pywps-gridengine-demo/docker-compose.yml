@@ -2,9 +2,9 @@ version: '2.0'
 services:
   wps:
     image: birdhouse/pywps-gridengine-demo
-    hostname: gridengine
+    hostname: wps
     environment:
-      HOSTNAME: gridengine
+      HOSTNAME: wps
       HTTP_PORT: 5000
       OUTPUT_PORT: 5001
     ports:
@@ -15,14 +15,14 @@ services:
     volumes:
       - lib:/opt/birdhouse/var/lib
       - log:/opt/birdhouse/var/log
-  # gridengine:
-  #   image: birdhouse/gridengine-wps
-  #   hostname: gridengine
-  #   environment:
-  #     HOSTNAME: gridengine
-  #   volumes:
-  #     - lib:/opt/birdhouse/var/lib
-  #     - log:/opt/birdhouse/var/log
+  gridengine:
+    image: birdhouse/gridengine-wps
+    hostname: gridengine
+    environment:
+      HOSTNAME: gridengine
+    volumes:
+      - lib:/opt/birdhouse/var/lib
+      - log:/opt/birdhouse/var/log
   db:
     hostname: db
     image: postgres

@@ -1,6 +1,6 @@
 FROM continuumio/miniconda
 MAINTAINER Birdhouse <wps@dkrz.de>
-LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.11"
+LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.12"
 
 # Add jessie backports repo for gridengine packages
 RUN echo "deb http://httpredir.debian.org/debian jessie-backports main contrib non-free" >> /etc/apt/sources.list
@@ -8,18 +8,19 @@ RUN echo "deb http://httpredir.debian.org/debian jessie-backports main contrib n
 #ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 
-# install ansible with conda
-RUN git clone https://github.com/bird-house/birdhouse-ansible.git /opt/ansible
-
 # install ansible
 RUN conda install -y -c conda-forge ansible
 
-# install gridengine via ansible
-WORKDIR /opt/ansible/gridengine
+# get ansible playbooks
+RUN git clone https://github.com/bird-house/birdhouse-ansible.git /opt/ansible
 
 # install gridengine master
+WORKDIR /opt/ansible/gridengine
 RUN ansible-playbook \
   -e sge_server_name=gridengine \
+  -e sge_submission_node=wps \
+  -e vnode_prefix=wn \
+  -e max_number_of_nodes=1 \
   playbooks/gridengine.yml
 
 # install gridengine worker
