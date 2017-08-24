@@ -1,26 +1,26 @@
-FROM nlesc/xenon-phusion-base
+FROM continuumio/miniconda
 MAINTAINER Birdhouse <wps@dkrz.de>
-LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.10"
+LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.11"
 
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update -y && \
-  apt-get install -y git
+# Add jessie backports repo
+RUN echo "deb http://httpredir.debian.org/debian jessie-backports main contrib non-free" >> /etc/apt/sources.list
+
+#ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update
 
 # install ansible with conda
-WORKDIR /root
-RUN git clone https://github.com/bird-house/birdhouse-ansible.git
-WORKDIR /root/birdhouse-ansible
-# RUN git checkout develop
-RUN bash bootstrap.sh -i -p /opt/conda
+RUN git clone https://github.com/bird-house/birdhouse-ansible.git /opt/ansible
 
-# add conda to path
-ENV PATH /opt/conda/bin:$PATH
+# install ansible
+RUN conda install -y -c conda-forge ansible
 
 # install gridengine via ansible
-WORKDIR /root/birdhouse-ansible/gridengine
+WORKDIR /opt/ansible/gridengine
 
 # install gridengine master
-RUN ansible-playbook -e sge_server_name=gridengine playbooks/gridengine.yml
+RUN ansible-playbook \
+  -e sge_server_name=gridengine \
+  playbooks/gridengine.yml
 
 # install gridengine worker
 RUN ansible-playbook \
@@ -29,7 +29,6 @@ RUN ansible-playbook \
   playbooks/gridengine.yml
 
 # config
-ENV HOSTNAME gridengine
 ENV SGE_ROOT /var/lib/gridengine
 
 # copy start script
