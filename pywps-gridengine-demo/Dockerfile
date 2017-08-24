@@ -36,7 +36,7 @@ RUN apt-get install -y gridengine-drmaa1.0 gridengine-drmaa-dev gridengine-clien
 RUN conda install -y -n emu -c birdhouse -c conda-forge psycopg2 drmaa dill
 
 # fix supervisor
-RUN cp /etc/supervisor/conf.d/gridengine.conf /opt/birdhouse/etc/supervisor/conf.d/gridengine.conf
+RUN cp /etc/supervisor/conf.d/sge_*.conf /opt/birdhouse/etc/supervisor/conf.d/
 ENV DAEMON_OPTS --nodaemon
 
 # copy start script

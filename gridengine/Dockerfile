@@ -1,6 +1,6 @@
 FROM nlesc/xenon-phusion-base
 MAINTAINER Birdhouse <wps@dkrz.de>
-LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.9"
+LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.10"
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -y && \
@@ -18,7 +18,15 @@ ENV PATH /opt/conda/bin:$PATH
 
 # install gridengine via ansible
 WORKDIR /root/birdhouse-ansible/gridengine
+
+# install gridengine master
 RUN ansible-playbook -e sge_server_name=gridengine playbooks/gridengine.yml
+
+# install gridengine worker
+RUN ansible-playbook \
+  -e sge_server_name=gridengine \
+  -e sge_type_of_node=wn \
+  playbooks/gridengine.yml
 
 # config
 ENV HOSTNAME gridengine
