@@ -29,3 +29,9 @@ How to build the image
 Build from this directory using the enclosed Dockerfile::
 
   $ docker build --rm -t birdhouse/slurm .
+
+Links
+-----
+
+* https://hub.docker.com/r/agaveapi/slurm/
+* https://github.com/NLeSC/xenon-docker-images
