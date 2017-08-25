@@ -2,7 +2,7 @@
 FROM birdhouse/emu
 MAINTAINER Birdhouse <wps@dkrz.de>
 
-LABEL Description="pywps gridengine demo" Vendor="Birdhouse" Version="0.1.1"
+LABEL Description="pywps gridengine demo" Vendor="Birdhouse" Version="0.1.2"
 
 # Add jessie backports repo for gridengine packages
 RUN echo "deb http://httpredir.debian.org/debian jessie-backports main contrib non-free" >> /etc/apt/sources.list
@@ -26,6 +26,9 @@ ENV SGE_ROOT /var/lib/gridengine
 
 # Install conda packages for scheduler extension
 RUN conda install -y -n emu -c birdhouse -c conda-forge psycopg2 drmaa dill
+
+# add wps user
+RUN useradd -d /home/wps -m --uid 1000 wps
 
 # update emu wps config
 ADD custom.cfg /opt/birdhouse/src/emu/custom.cfg

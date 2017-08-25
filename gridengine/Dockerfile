@@ -19,6 +19,7 @@ WORKDIR /opt/ansible/gridengine
 RUN ansible-playbook \
   -e sge_server_name=gridengine \
   -e sge_type_of_node=front \
+  -e sge_submission_node=wps \
   playbooks/gridengine.yml
 
 # install gridengine worker
