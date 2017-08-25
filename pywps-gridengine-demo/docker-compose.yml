@@ -4,7 +4,7 @@ services:
     image: birdhouse/pywps-gridengine-demo
     hostname: wps
     environment:
-      HOSTNAME: wps
+      HOSTNAME: localhost
       HTTP_PORT: 5000
       OUTPUT_PORT: 5001
     ports:

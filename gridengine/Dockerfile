@@ -1,6 +1,6 @@
 FROM continuumio/miniconda
 MAINTAINER Birdhouse <wps@dkrz.de>
-LABEL Description="gridengine" Vendor="Birdhouse" Version="0.1.14"
+LABEL Description="gridengine" Vendor="Birdhouse" Version="0.2.1"
 
 # Add jessie backports repo for gridengine packages
 RUN echo "deb http://httpredir.debian.org/debian jessie-backports main contrib non-free" >> /etc/apt/sources.list
