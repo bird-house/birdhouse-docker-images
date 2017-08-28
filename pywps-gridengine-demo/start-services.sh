@@ -9,12 +9,13 @@
 #=============================================================#
 # keep external environment
 set -o allexport
-# update the wps config (customized by environment variables)
-make update-config
 # fix config
 echo "fix permissions"
 chown -R wps /opt/birdhouse/var/lib
 chown -R wps /opt/birdhouse/var/log
-chown -R wps /opt/birdhouse/var/run
+#chown -R wps /opt/birdhouse/var/run
+rm -rf /opt/birdhouse/var/run && mkdir -p /opt/birdhouse/var/run
+# update the wps config (customized by environment variables)
+make update-config
 # start supervisor service with wps and nginx
 make start

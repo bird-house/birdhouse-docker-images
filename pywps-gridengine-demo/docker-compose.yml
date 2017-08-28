@@ -15,7 +15,6 @@ services:
     volumes:
       - lib:/opt/birdhouse/var/lib
       - log:/opt/birdhouse/var/log
-      - run:/opt/birdhouse/var/run
   gridengine:
     image: birdhouse/gridengine
     hostname: gridengine
@@ -46,4 +45,3 @@ services:
 volumes:
   lib:
   log:
-  run:

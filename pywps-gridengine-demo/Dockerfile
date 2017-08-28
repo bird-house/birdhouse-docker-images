@@ -2,7 +2,7 @@
 FROM birdhouse/emu
 MAINTAINER Birdhouse <wps@dkrz.de>
 
-LABEL Description="pywps gridengine demo" Vendor="Birdhouse" Version="0.1.2"
+LABEL Description="pywps gridengine demo" Vendor="Birdhouse" Version="0.1.3"
 
 # Add jessie backports repo for gridengine packages
 RUN echo "deb http://httpredir.debian.org/debian jessie-backports main contrib non-free" >> /etc/apt/sources.list

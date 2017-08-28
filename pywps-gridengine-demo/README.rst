@@ -144,8 +144,8 @@ shared filesystem. You can mount the named volumes::
 
   $ docker run -it --rm \
     -v pywpsgridenginedemo_log:/shared/log \
-    -v  pywpsgridenginedemo_lib:/shared/lib \
-    debian /bin/bash
+    -v pywpsgridenginedemo_lib:/shared/lib \
+    debian tail -f /shared/log/supervisor/emu.log
 
 When you start the docker containers as described above you can watch the logs::
 
