@@ -15,8 +15,11 @@ GridEngine server.
 Architecture
 *************
 
-.. raw:: html
-      <img src="https://www.draw.io/?lightbox=1&target=blank&highlight=0000ff&edit=_blank&layers=1&nav=1&title=pywps-gridengine-demo-architecture.xml#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fbird-house%2Fbirdhouse-docker-images%2Fmaster%2Fpywps-gridengine-demo%2Fdraw.io%2Fpywps-gridengine-demo-architecture.xml" alt="draw.io Architecture diagram">
+The architecture consists of the PyWPS service (including Nginx), the GridEngine scheduler,
+1 or more GridEngine worker nodes, a Postgres database and a shared filesystem
+(used for PyWPS status documents, workdir and outputs).
+
+.. image:: draw.io/pywps-gridengine-demo-architecture.png
 
 How to run the demo
 *******************
