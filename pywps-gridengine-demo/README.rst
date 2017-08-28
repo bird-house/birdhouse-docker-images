@@ -131,7 +131,7 @@ Finally ... shutdown
 
 Use docker-compose to stop the containers::
 
-  $ docker-compose down
+  $ docker-compose down --volumes
 
 Advanced steps
 **************
