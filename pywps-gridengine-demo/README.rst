@@ -16,7 +16,7 @@ Architecture
 *************
 
 The architecture consists of the PyWPS service (including Nginx), the GridEngine scheduler,
-1 or more GridEngine worker nodes, a Postgres database and a shared filesystem
+one or more GridEngine worker nodes, a Postgres database and a shared filesystem
 (used for PyWPS status documents, workdir and outputs).
 
 .. image:: draw.io/pywps-gridengine-demo-architecture.png
