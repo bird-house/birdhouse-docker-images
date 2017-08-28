@@ -17,7 +17,7 @@ services:
       - log:/opt/birdhouse/var/log
       - run:/opt/birdhouse/var/run
   gridengine:
-    image: birdhouse/gridengine-wps
+    image: birdhouse/gridengine
     hostname: gridengine
     environment:
       HOSTNAME: gridengine
