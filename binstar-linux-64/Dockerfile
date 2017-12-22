@@ -1,6 +1,6 @@
 FROM binstar/linux-64
 MAINTAINER MAINTAINER Birdhouse <wps@dkrz.de>
-LABEL Description="conda build image" Vendor="Birdhouse" Version="0.2.2"
+LABEL Description="conda build image" Vendor="Birdhouse" Version="0.2.3"
 RUN yum update -y && \
   yum install -y epel-release && \
   yum install -y wget curl gcc-c++ make tar bzip2 unzip patch
