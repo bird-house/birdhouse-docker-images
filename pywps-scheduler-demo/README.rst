@@ -47,6 +47,8 @@ Start the demo with docker-compose::
 
   $ docker-compose up -d  # runs with -d in the background
   $ docker-compose logs -f  # check the logs if running in background
+  $ docker exec pywpsschedulerdemo_wps_1 tail -f /opt/birdhouse/var/log/supervisor/emu.log # check the supervisor log
+  $ docker exec pywpsschedulerdemo_wps_1 tail -f /opt/birdhouse/var/log/pywps/emu.log # check the pywps log
 
 By default the WPS service should be available on port 5000::
 
