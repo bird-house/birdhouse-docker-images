@@ -1,0 +1,12 @@
+name: ncwms2
+channels:
+  - birdhouse
+  - defaults
+  - conda-forge
+dependencies:
+  - python=2.7
+  - setuptools=27.2.0
+  - pyyaml
+  - ncwms2=2.4.1
+  - apache-tomcat=7
+  - supervisor=3.3
