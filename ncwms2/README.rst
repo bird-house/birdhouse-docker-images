@@ -25,24 +25,10 @@ Change default options:
 Build Docker
 ************
 
-Update Dockerfile:
+Build docker image::
 
-.. code-block:: sh
+  $ docker-compose build
 
-  $ make Dockerfile
-
-Build docker image:
-
-.. code-block:: sh
-
-  $ make dockerbuild
-
-Start docker:
-
-.. code-block:: sh
+Start docker::
 
   $ docker-compose up
-
-
-
-
