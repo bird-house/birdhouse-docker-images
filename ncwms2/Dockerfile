@@ -33,6 +33,7 @@ ENV CONDA_ENVS_DIR /opt/conda/envs
 RUN make clean install
 
 # Volume for data, cache, logfiles, ...
+RUN chown -R $USER /opt/birdhouse/var
 RUN chown -R $USER $CONDA_ENVS_DIR/birdhouse
 RUN mkdir -p $CONDA_ENVS_DIR/birdhouse/var/lib && mv $CONDA_ENVS_DIR/birdhouse/var/lib /data && ln -s /data $CONDA_ENVS_DIR/birdhouse/var/lib
 RUN chown -R $USER /data
