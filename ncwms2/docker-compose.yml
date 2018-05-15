@@ -1,8 +1,12 @@
-ncwms:
-  image: birdhouse/ncwms2
-  ports:
-    - "48080:9001"
-    - "8080:8080"
-  volumes:
-    - data:/data
-  volume_driver: local
+version: '3'
+services:
+  ncwms:
+    build: .
+    image: birdhouse/ncwms2
+    ports:
+      - "48080:9001"
+      - "8080:8080"
+    volumes:
+      - data:/data
+volumes:
+  data:
