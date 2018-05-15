@@ -1,0 +1,16 @@
+[buildout]
+extends = buildout.cfg
+
+[settings]
+# tomcat config
+http-port = 8080
+tomcat-ncwms-password =
+# ncwms config
+contact = Birdhouse Admin
+organization = Birdhouse
+title = Birdhouse ncWMS2 Server
+abstract = ncWMS2 Web Map Service used in Birdhouse
+url = http://bird-house.github.io/
+
+
+
