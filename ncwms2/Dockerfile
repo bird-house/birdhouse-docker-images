@@ -1,10 +1,10 @@
 # vim:set ft=dockerfile:
 FROM birdhouse/bird-base:latest
-MAINTAINER https://github.com/bird-house/birdhouse-playground/tree/master/ncwms2
+MAINTAINER https://github.com/bird-house/birdhouse-docker-images
 
-LABEL Description="ncWMS2 Web Map Service" Vendor="Reading eScience Centre" Version="2.2.8"
+LABEL Description="ncWMS2 Web Map Service" Vendor="Reading eScience Centre" Version="2.4.1"
 
-# Configure hostname and user for services 
+# Configure hostname and user for services
 ENV HOSTNAME localhost
 ENV USER www-data
 
@@ -30,7 +30,7 @@ ENV ANACONDA_HOME /opt/conda
 ENV CONDA_ENVS_DIR /opt/conda/envs
 
 # Run install
-RUN make clean install 
+RUN make clean install
 
 # Volume for data, cache, logfiles, ...
 RUN chown -R $USER $CONDA_ENVS_DIR/birdhouse
@@ -46,4 +46,3 @@ ENV DAEMON_OPTS --nodaemon --user $USER
 
 # Start service ...
 CMD ["make", "update-config", "update-user", "start"]
-
