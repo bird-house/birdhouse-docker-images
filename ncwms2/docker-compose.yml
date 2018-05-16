@@ -4,7 +4,6 @@ services:
     build: .
     image: birdhouse/ncwms2
     ports:
-      - "48080:9001"
       - "8080:8080"
     volumes:
       - data:/data
