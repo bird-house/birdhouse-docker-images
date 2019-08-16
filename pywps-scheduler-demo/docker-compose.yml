@@ -6,16 +6,12 @@ services:
     environment:
       HOSTNAME: localhost
       HTTP_PORT: 5000
-      OUTPUT_PORT: 5001
     ports:
       # wps port
       - "5000:5000"
-      # nginx output port
-      - "5001:5001"
     volumes:
       - ./slurm:/etc/slurm-llnl:ro
-      - lib:/opt/birdhouse/var/lib
-      - log:/opt/birdhouse/var/log
+      - data:/data
   slurm:
     hostname: slurm
     image: birdhouse/slurm
@@ -31,8 +27,7 @@ services:
     #    - "6818:6818"
     volumes:
       - ./slurm:/etc/slurm-llnl:ro
-      - lib:/opt/birdhouse/var/lib
-      - log:/opt/birdhouse/var/log
+      - data:/data
     command: ["slurmd"]
   slurm_wn2:
     hostname: slurm_wn2
@@ -41,8 +36,7 @@ services:
     #    - "6818:6818"
     volumes:
       - ./slurm:/etc/slurm-llnl:ro
-      - lib:/opt/birdhouse/var/lib
-      - log:/opt/birdhouse/var/log
+      - data:/data
     command: ["slurmd"]
   db:
     hostname: db
@@ -53,5 +47,4 @@ services:
     #    - "5432:5432"
 
 volumes:
-  lib:
-  log:
+  data:
