@@ -37,7 +37,7 @@ Get docker images using docker-compose::
 
   $ docker-compose pull
 
-The docker-compose uses ``/opt/birdhouse`` as mount point for the container volume.
+The docker-compose uses ``/data`` as mount point for the container volume.
 
 
 Run the demo with docker
@@ -47,8 +47,11 @@ Start the demo with docker-compose::
 
   $ docker-compose up -d  # runs with -d in the background
   $ docker-compose logs -f  # check the logs if running in background
-  $ docker exec pywpsschedulerdemo_wps_1 tail -f /opt/birdhouse/var/log/supervisor/emu.log # check the supervisor log
-  $ docker exec pywpsschedulerdemo_wps_1 tail -f /opt/birdhouse/var/log/pywps/emu.log # check the pywps log
+  $ docker exec pywps-scheduler-demo_wps_1 tail -f /var/log/pywps.log # check the pywps log
+
+You can also log in to the running container::
+
+  $ docker exec -it pywps-scheduler-demo_wps_1 /bin/bash
 
 By default the WPS service should be available on port 5000::
 

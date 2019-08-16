@@ -1,30 +1,53 @@
 # vim:set ft=dockerfile:
-FROM birdhouse/emu:latest
-MAINTAINER Birdhouse <wps@dkrz.de>
+FROM conda/miniconda3:latest
+MAINTAINER Birdhouse <ehbrecht@dkrz.de>
 
-LABEL Description="pywps scheduler demo" Vendor="Birdhouse" Version="0.6.0"
+LABEL Description="pywps scheduler demo" Vendor="Birdhouse" Version="0.10.4"
 
 # install debian packages with slurm drmaa
 RUN apt-get update && \
-  apt-get install -y slurm-drmaa1 slurm-drmaa-dev slurm-llnl
+  apt-get install -y \
+          software-properties-common \
+          build-essential \
+          vim \
+          unzip \
+          curl \
+          wget \
+          git \
+          slurm-drmaa1 slurm-drmaa-dev slurm-llnl
 
-# Install conda packages for scheduler extension
+# update conda
 RUN conda update -y conda && \
-  conda install -y -n emu -c birdhouse -c conda-forge psycopg2 drmaa dill
+  conda install -y -c conda-forge pip python=3.6 netCDF4 xarray psycopg2 drmaa
 
-# change demo user home
-RUN usermod -m -d /home/demo www-data && \
-  mkdir /home/demo && \
-  chown -R www-data /home/demo
+# init bash for conda
+RUN conda init bash
+
+# clone emu wps
+WORKDIR /opt
+RUN git clone https://github.com/bird-house/emu.git wps
+
+# install emu
+WORKDIR /opt/wps
+RUN pip install -e .
+
+# Update to latest pywps
+RUN pip install --upgrade git+https://github.com/cehbrecht/pywps.git@pingudev
+
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
 
 # add slurm config
-ADD slurm/slurm.conf /etc/slurm-llnl/slurm.conf
+COPY slurm/slurm.conf /etc/slurm-llnl/slurm.conf
 
-# update emu wps config
-ADD custom.cfg /opt/birdhouse/src/emu/custom.cfg
+# update pywps config
+COPY custom.cfg /etc/pywps.cfg
+ENV PYWPS_CFG=/etc/pywps.cfg
 
-# copy start script
-COPY start-services.sh /etc/start-services.sh
+# create data volume
+RUN mkdir /data
 
-# Start service ...
-CMD ["/etc/start-services.sh"]
+# Start WPS service on port 5000 on 0.0.0.0
+EXPOSE 5000
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["emu start -b 0.0.0.0 -c /etc/pywps.cfg"]
