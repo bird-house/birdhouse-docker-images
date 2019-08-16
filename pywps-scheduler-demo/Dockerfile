@@ -2,7 +2,7 @@
 FROM conda/miniconda3:latest
 MAINTAINER Birdhouse <ehbrecht@dkrz.de>
 
-LABEL Description="pywps scheduler demo" Vendor="Birdhouse" Version="0.10.4"
+LABEL Description="pywps scheduler demo" Vendor="Birdhouse" Version="0.10.0"
 
 # install debian packages with slurm drmaa
 RUN apt-get update && \
