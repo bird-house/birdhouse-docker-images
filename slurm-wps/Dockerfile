@@ -1,7 +1,7 @@
 FROM birdhouse/slurm
 
 MAINTAINER Birdhouse <ehbrecht@dkrz.de>
-LABEL Description="Slurm with Emu WPS" Vendor="Birdhouse" Version="0.10.0"
+LABEL Description="Slurm with Emu WPS" Vendor="Birdhouse" Version="0.10.1"
 
 # update conda
 RUN conda update -y conda && \
@@ -22,8 +22,8 @@ RUN pip install -e .
 RUN pip install --upgrade git+https://github.com/cehbrecht/pywps.git@pingudev
 
 # update pywps config
-COPY custom.cfg /etc/pywps.cfg
-ENV PYWPS_CFG=/etc/pywps.cfg
+# COPY custom.cfg /etc/pywps.cfg
+# ENV PYWPS_CFG=/etc/pywps.cfg
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8

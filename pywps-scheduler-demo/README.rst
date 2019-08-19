@@ -47,7 +47,7 @@ Start the demo with docker-compose::
 
   $ docker-compose up -d  # runs with -d in the background
   $ docker-compose logs -f  # check the logs if running in background
-  $ docker exec pywps-scheduler-demo_wps_1 tail -f /var/log/pywps.log # check the pywps log
+  $ docker exec pywps-scheduler-demo_wps_1 tail -f /data/pywps.log # check the pywps log
 
 You can also log in to the running container::
 
@@ -55,17 +55,17 @@ You can also log in to the running container::
 
 By default the WPS service should be available on port 5000::
 
-  $ firefox "http://localhost:5000/wps?service=wps&request=GetCapabilities"
+  $ curl -X GET -i 'http://localhost:5000/wps?service=wps&request=GetCapabilities'
 
 Run a "hello" to see if the service is responding::
 
-  $ firefox "http://localhost:5000/wps?service=wps&request=Execute&version=1.0.0&identifier=hello&datainputs=name=Friday"
+  $ curl -X GET -i 'http://localhost:5000/wps?service=wps&request=Execute&version=1.0.0&identifier=hello&datainputs=name=Friday'
 
 This process was run synchronously and was executed on the WPS server itself.
 
 Now, we run a "sleep" process in async mode which will be delegated to the Slurm server::
 
-  $ firefox "http://localhost:5000/wps?service=wps&request=Execute&version=1.0.0&identifier=sleep&datainputs=delay=10&storeExecuteResponse=true&status=true"
+  $ curl -X GET -i 'http://localhost:5000/wps?service=wps&request=Execute&version=1.0.0&identifier=sleep&datainputs=delay=10&storeExecuteResponse=true&status=true'
 
 Hopefully you will get a status response looking like this:
 
@@ -93,7 +93,7 @@ Hopefully you will get a status response looking like this:
 
 Poll the status location link given in this document, for example::
 
-  $ firefox "http://localhost:5001/wpsoutputs/emu/ae284b7e-3708-11e7-8c84-0242ac110003.xml"
+  $ curl -X GET -i "http://localhost:5001/wpsoutputs/emu/ae284b7e-3708-11e7-8c84-0242ac110003.xml"
 
 You might get the following response:
 
@@ -174,19 +174,16 @@ To see what is happening on wps/slurm processing you currently need to mount the
 shared filesystem. You can mount the named volumes::
 
   $ docker run -it --rm \
-    -v pywpsschedulerdemo_log:/shared/log \
-    -v  pywpsschedulerdemo_lib:/shared/lib \
+    -v  pywps-scheduler-demo_data:/data \
     debian /bin/bash
 
 When you start the docker containers as described above you can watch the logs::
 
-  $ tail -f /shared/var/log/pywps/emu.log
-  $ tail -f /shared/var/log/supervisor/emu.log
+  $ tail -f /data/pywps.log
 
 And also the output and working directories (temp folders)::
 
-  $ ls /shared/var/lib/pywps/outputs/emu/
-  $ ls /shared/var/lib/pywps/tmp/emu/
+  $ ls /data
 
 
 How to build the demo image
