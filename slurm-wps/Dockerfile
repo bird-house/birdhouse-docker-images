@@ -1,7 +1,7 @@
 FROM birdhouse/slurm
 
 MAINTAINER Birdhouse <ehbrecht@dkrz.de>
-LABEL Description="Slurm with Emu WPS" Vendor="Birdhouse" Version="0.10.1"
+LABEL Description="Slurm with Emu WPS" Vendor="Birdhouse" Version="0.10.2"
 
 # update conda
 RUN conda update -y conda && \
